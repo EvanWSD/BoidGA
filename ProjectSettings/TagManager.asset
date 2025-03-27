@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FishBoid
   - BoidManager
+  - Plant
   layers:
   - Default
   - TransparentFX

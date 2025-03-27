@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: -1894374427632154506}
   - component: {fileID: 2933713029649793806}
   - component: {fileID: 5854416015185008283}
+  - component: {fileID: 1519200795605606841}
+  - component: {fileID: 828224731213803233}
   m_Layer: 7
   m_Name: Fish
   m_TagString: Untagged
@@ -218,6 +220,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3857327, y: 0.37483913}
   m_EdgeRadius: 0
+--- !u!114 &1519200795605606841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115476135907606149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d7aef0d68dca0409b330f16c3c8283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &828224731213803233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115476135907606149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ef9cfeb62a44e45944d2b53f6efc7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHunger: 20
+  hungerRate: 0.1
 --- !u!1001 &4154384415608217699
 PrefabInstance:
   m_ObjectHideFlags: 0
