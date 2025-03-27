@@ -1,0 +1,77 @@
+using System;
+using UnityEngine;
+using UnityEngine.Events;
+
+public enum SharkState
+{
+    idle,
+    chasing
+}
+
+public class SharkBoid2D : Boid2D
+{
+    [SerializeField] LayerMask fishMask;
+    FishBoid2D targetFish;
+    Vector2 lastKnownTargetPos;
+    float fishTargetWeight = 10f;
+    SharkState state = SharkState.idle;
+    public UnityEvent<FishBoid2D> onSawFish = new UnityEvent<FishBoid2D>();
+
+    float loseFishTimerMax = 2f;
+    float loseFishTimerDelta = 2f;
+
+    void Start() {
+        onSawFish.AddListener(OnSawFish);
+        debugColor = Color.red;
+    }
+
+    void OnSawFish(FishBoid2D seenFish) {
+        if (seenFish == null && targetFish == null) {
+            return;
+        }
+        if (seenFish && targetFish) {
+            lastKnownTargetPos = seenFish.transform.position;
+            return;
+        }
+        if (seenFish != null && targetFish == null) {
+            targetFish = seenFish;
+            BeginChasing();
+        }
+        if (seenFish == null && targetFish != null) {
+            loseFishTimerDelta -= Time.deltaTime;
+            if (loseFishTimerDelta <= 0) {
+                targetFish = null;
+                loseFishTimerDelta = loseFishTimerMax;
+                ReturnToIdle();
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (IsInLayerMask(other.gameObject.layer, fishMask)) {
+            //Destroy(other.gameObject);
+        }
+    }
+
+    void FixedUpdate() {
+        Detect(110f, 5f, fishMask, onSawFish);
+    }
+
+    void BeginChasing() {
+        state = SharkState.chasing;
+        maxSpeed *= 1.5f;
+    }
+
+    void ReturnToIdle() {
+        state = SharkState.idle;
+        maxSpeed /= 1.5f;
+    }
+
+    protected override Vector2 ApplyCustomRules(Vector2 a) {
+        a = base.ApplyCustomRules(a);
+        if (state == SharkState.chasing) {
+            a += SteerTowards(lastKnownTargetPos) * fishTargetWeight;
+        }
+        return a;
+    }
+}
