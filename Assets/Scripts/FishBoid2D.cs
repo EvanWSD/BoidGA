@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -37,7 +36,6 @@ public class FishBoid2D : Boid2D
                     calmTimerDelta = calmTimerMax;
                 }
             }
-
             return;
         }
 
@@ -78,6 +76,7 @@ public class FishBoid2D : Boid2D
         }
     }
 
+    #region Poster Visualisation
     void PosterVisSeparation() {
         Gizmos.color = Color.green;
         float radius = settings.separationRadius;
@@ -119,4 +118,5 @@ public class FishBoid2D : Boid2D
         var p2 = endPosition; ;
         Handles.DrawBezier(p1,p2,p1,p2, col,null,thickness);
     }
+    #endregion
 }

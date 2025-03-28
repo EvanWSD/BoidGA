@@ -31,6 +31,6 @@ public class PlantSpawner : MonoBehaviour
         float x = Random.Range(center.x - _camBounds.size.x / 2f, center.x + _camBounds.size.x / 2f);
         float y = Random.Range(center.y - _camBounds.size.y / 2f, center.y + _camBounds.size.y / 2f);
         Vector3 spawnPos = new Vector3(x, y, 0);
-        Instantiate(plantPrefab, spawnPos, Quaternion.identity);
+        Instantiate(plantPrefab, spawnPos, Quaternion.Euler(0f, 0f, 45f));
     }
 }
