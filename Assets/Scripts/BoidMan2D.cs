@@ -7,18 +7,18 @@ public class BoidMan2D : MonoBehaviour {
 
     public BoidSettings settings;
     public ComputeShader compute;
-    Boid2D[] boids;
-    public FishBoid2D[] allFish;
-    SharkBoid2D[] allSharks;
+    List<Boid2D> boids;
+    public List<FishBoid2D> allFish;
+    public List<SharkBoid2D> allSharks;
 
     void Start () {
-        boids = FindObjectsOfType<Boid2D>();
+        boids = new List<Boid2D>(FindObjectsOfType<Boid2D>());
         foreach (Boid2D b in boids) {
-            b.Initialize (settings);
+            b.Initialize(settings);
         }
 
-        allFish = FindObjectsOfType<FishBoid2D>();
-        allSharks = FindObjectsOfType<SharkBoid2D>();
+        allFish = new List<FishBoid2D>(FindObjectsOfType<FishBoid2D>());
+        allSharks = new List<SharkBoid2D>(FindObjectsOfType<SharkBoid2D>());
     }
 
     void Update () {
@@ -26,7 +26,7 @@ public class BoidMan2D : MonoBehaviour {
         UpdateSpecies(allSharks);
     }
 
-    List<Boid2D> GetLiveBoids(Boid2D[] speciesBoids) { // can likely be optimised w/ diff data structures
+    List<Boid2D> GetLiveBoids(IEnumerable<Boid2D> speciesBoids) {
         List<Boid2D> aliveBoids = new List<Boid2D>();
         foreach (Boid2D boid in speciesBoids) {
             if (boid) {
@@ -36,7 +36,7 @@ public class BoidMan2D : MonoBehaviour {
         return aliveBoids;
     }
 
-    void UpdateSpecies(Boid2D[] speciesBoids) {
+    void UpdateSpecies(IEnumerable<Boid2D> speciesBoids) {
         List<Boid2D> aliveBoids = GetLiveBoids(speciesBoids);
         int numOfSpecies = aliveBoids.Count;
         if (numOfSpecies == 0) return;
@@ -82,7 +82,7 @@ public class BoidMan2D : MonoBehaviour {
 
         public static int Size {
             get {
-                return sizeof (float) * 2 * 5 + sizeof (int);
+                return sizeof(float) * 2 * 5 + sizeof(int);
             }
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,6 +26,13 @@ public class FishBoid2D : Boid2D
     void Start() {
         onSawShark.AddListener(OnSawShark);
         debugColor = Color.cyan;
+    }
+
+    public override void Initialize(BoidSettings settings) {
+        base.Initialize(settings);
+        calmTimerDelta = calmTimerMax;
+        BoidMan2D boidManager = GameObject.FindGameObjectWithTag("BoidManager").GetComponent<BoidMan2D>();
+        boidManager.allFish.Add(this);
     }
 
     void OnSawShark(SharkBoid2D seenShark) {

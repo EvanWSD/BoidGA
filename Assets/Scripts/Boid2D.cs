@@ -19,14 +19,13 @@ public class Boid2D : MonoBehaviour
 
     protected Color debugColor = Color.white;
 
-    public void Initialize(BoidSettings settings) {
+    public virtual void Initialize(BoidSettings settings) {
         this.settings = settings;
         this.maxSpeed = settings.maxSpeed;
         float randomSpeed = Random.Range(settings.minSpeed, settings.maxSpeed);
         velocity = Random.insideUnitCircle * randomSpeed;
         pos = transform.position;
         headingDir = transform.up;
-        boidManager = GameObject.FindGameObjectWithTag("BoidManager").GetComponent<BoidMan2D>();
     }
 
     public void UpdateBoid() {

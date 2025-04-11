@@ -7,6 +7,10 @@ TagManager:
   - FishBoid
   - BoidManager
   - Plant
+  - GraphCamera
+  - FishLine
+  - SharkLine
+  - SharkBoid
   layers:
   - Default
   - TransparentFX

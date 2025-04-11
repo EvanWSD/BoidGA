@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,7 +14,7 @@ public class SharkBoid2D : Boid2D
     Vector2 lastKnownTargetPos;
     float fishTargetWeight = 10f;
     SharkState state = SharkState.idle;
-    public UnityEvent<FishBoid2D> onSawFish = new UnityEvent<FishBoid2D>();
+    public UnityEvent<FishBoid2D> onSawFish = new();
 
     float loseFishTimerMax = 2f;
     float loseFishTimerDelta = 2f;
@@ -23,6 +22,12 @@ public class SharkBoid2D : Boid2D
     void Start() {
         onSawFish.AddListener(OnSawFish);
         debugColor = Color.red;
+    }
+
+    public override void Initialize(BoidSettings settings) {
+        base.Initialize(settings);
+        BoidMan2D boidManager = GameObject.FindGameObjectWithTag("BoidManager").GetComponent<BoidMan2D>();
+        boidManager.allSharks.Add(this);
     }
 
     void OnSawFish(FishBoid2D seenFish) {
@@ -49,7 +54,7 @@ public class SharkBoid2D : Boid2D
 
     void OnTriggerEnter2D(Collider2D other) {
         if (IsInLayerMask(other.gameObject.layer, fishMask)) {
-            //Destroy(other.gameObject);
+            Destroy(other.gameObject);
         }
     }
 
