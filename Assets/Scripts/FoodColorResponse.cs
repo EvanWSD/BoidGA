@@ -1,8 +1,10 @@
-using System.Collections;
 using UnityEngine;
 
 public class FoodColorResponse : MonoBehaviour
 {
+    [SerializeField] Color responseColor = Color.green;
+    [SerializeField] float duration = 2f;
+
     AgentColorManager colorManager;
     AgentHunger agentHunger;
 
@@ -10,13 +12,7 @@ public class FoodColorResponse : MonoBehaviour
         colorManager = GetComponent<AgentColorManager>();
         agentHunger = GetComponent<AgentHunger>();
         agentHunger.OnEat.AddListener(() => {
-            StartCoroutine(FlashGreenForSeconds(0.5f));
+            colorManager.FlashColorForSeconds(responseColor, duration);
         });
-    }
-
-    IEnumerator FlashGreenForSeconds(float duration) {
-        colorManager.ChangeColor(Color.green, Color.green);
-        yield return new WaitForSeconds(duration);
-        colorManager.ResetColors();
     }
 }

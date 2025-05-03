@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "BoidSettings", menuName = "Boid/Settings")]
 public class BoidSettings : ScriptableObject {
+
     [Header("Movement")]
     public float minSpeed = 2;
     public float maxSpeed = 5;
@@ -29,6 +28,16 @@ public class BoidSettings : ScriptableObject {
     public LayerMask obstacleMask;
     public float avoidCollisionWeight = 10;
     public float collisionAvoidDst = 5;
+
+    [Header("Genetic Algorithm")]
+    public float mutationRate = 0.1f;
+    public bool loadGenesFromFile = false;
+    public string geneFileName = "genes.json";
+
+
+    [Header("Ecosystem Simulation")]
+    public float rpThresholdBase = 30f;
+    public float rpThresholdVariance = 5f;
 
     [Header("Visualisation")]
     public bool visSeparation;

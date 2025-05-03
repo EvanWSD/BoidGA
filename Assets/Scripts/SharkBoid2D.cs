@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +10,8 @@ public enum SharkState
 
 public class SharkBoid2D : Boid2D
 {
+    public static List<Boid2D> allSharks = new();
+
     [SerializeField] LayerMask fishMask;
     FishBoid2D targetFish;
     Vector2 lastKnownTargetPos;
@@ -27,7 +30,16 @@ public class SharkBoid2D : Boid2D
     public override void Initialize(BoidSettings settings) {
         base.Initialize(settings);
         BoidMan2D boidManager = GameObject.FindGameObjectWithTag("BoidManager").GetComponent<BoidMan2D>();
-        boidManager.allSharks.Add(this);
+    }
+
+    protected override void OnEnable() {
+        base.OnEnable();
+        allSharks.Add(this);
+    }
+
+    protected override void OnDisable() {
+        base.OnDisable();
+        allSharks.Remove(this);
     }
 
     void OnSawFish(FishBoid2D seenFish) {
@@ -54,10 +66,9 @@ public class SharkBoid2D : Boid2D
 
     void OnTriggerEnter2D(Collider2D other) {
         if (IsInLayerMask(other.gameObject.layer, fishMask)) {
-            Destroy(other.gameObject);
+            other.GetComponent<AgentReproduction>().OnDeathAttempt.Invoke();
         }
     }
-
     void FixedUpdate() {
         Detect(110f, 5f, fishMask, onSawFish);
     }

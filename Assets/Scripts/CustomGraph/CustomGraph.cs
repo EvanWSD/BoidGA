@@ -8,6 +8,7 @@ enum GraphUtil {
 
 public class CustomGraph : MonoBehaviour
 {
+    GraphFuncLib graphFuncLib;
     [SerializeField] Camera mainCam;
     [SerializeField] LineRenderer fishLR;
     [SerializeField] LineRenderer sharkLR;
@@ -36,6 +37,7 @@ public class CustomGraph : MonoBehaviour
     List<Color> cols;
 
     void Start() {
+        graphFuncLib = GetComponent<GraphFuncLib>();
         mainCam = Camera.main;
         cols = new List<Color>() { Color.red, Color.yellow, Color.green, Color.cyan, Color.blue };
         oldYScale = yScale;
@@ -55,7 +57,7 @@ public class CustomGraph : MonoBehaviour
             mainCam.enabled = !mainCam.enabled;
         }
 
-        // graph shiz
+
         if (graphStarted)
         {
             if (Time.time - baseTime > timeToMax) {
@@ -79,15 +81,14 @@ public class CustomGraph : MonoBehaviour
 
     // main function mapping X->Y (edit this!)
     float F(Transform t) {
-
         if (t.CompareTag("FishLine")) {
-            return GameObject.FindGameObjectsWithTag("FishBoid").Length;
+            return graphFuncLib.AverageGeneValue(FishBoid2D.allFish, "fovAngle");
         }
 
         if (t.CompareTag("SharkLine")) {
-            return GameObject.FindGameObjectsWithTag("SharkBoid").Length;
+            return graphFuncLib.AverageGeneValue(SharkBoid2D.allSharks, "fovAngle");
         }
-        return 0;
+        return 0f;
     }
 
     void PlotPoints()
@@ -121,8 +122,9 @@ public class CustomGraph : MonoBehaviour
         oldXScale = xScale;
     }
 
-
     void GetInitInfo() {
         boidLRs = new List<LineRenderer>() { fishLR, sharkLR };
     }
+
+
 }

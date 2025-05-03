@@ -7,44 +7,28 @@ public class BoidMan2D : MonoBehaviour {
 
     public BoidSettings settings;
     public ComputeShader compute;
-    List<Boid2D> boids;
-    public List<FishBoid2D> allFish;
-    public List<SharkBoid2D> allSharks;
 
     void Start () {
-        boids = new List<Boid2D>(FindObjectsOfType<Boid2D>());
-        foreach (Boid2D b in boids) {
+        foreach (Boid2D b in Boid2D.allBoids) {
             b.Initialize(settings);
         }
-
-        allFish = new List<FishBoid2D>(FindObjectsOfType<FishBoid2D>());
-        allSharks = new List<SharkBoid2D>(FindObjectsOfType<SharkBoid2D>());
     }
 
     void Update () {
-        UpdateSpecies(allFish);
-        UpdateSpecies(allSharks);
+        UpdateSpecies(FishBoid2D.allFish);
+        UpdateSpecies(SharkBoid2D.allSharks);
     }
 
-    List<Boid2D> GetLiveBoids(IEnumerable<Boid2D> speciesBoids) {
-        List<Boid2D> aliveBoids = new List<Boid2D>();
-        foreach (Boid2D boid in speciesBoids) {
-            if (boid) {
-                aliveBoids.Add(boid);
-            }
-        }
-        return aliveBoids;
-    }
-
-    void UpdateSpecies(IEnumerable<Boid2D> speciesBoids) {
-        List<Boid2D> aliveBoids = GetLiveBoids(speciesBoids);
-        int numOfSpecies = aliveBoids.Count;
+    void UpdateSpecies(List<Boid2D> speciesBoids) {
+        int numOfSpecies = speciesBoids.Count;
         if (numOfSpecies == 0) return;
 
         var boidData = new BoidData2D[numOfSpecies];
         for (int i = 0; i < numOfSpecies; i++) {
-            boidData[i].position = aliveBoids[i].pos;
-            boidData[i].direction = aliveBoids[i].headingDir;
+            boidData[i].position = speciesBoids[i].pos;
+            boidData[i].direction = speciesBoids[i].headingDir;
+            boidData[i].perceptionRadius = speciesBoids[i].perceptionRadius;
+            boidData[i].separationRadius = speciesBoids[i].separationRadius;
         }
 
         var boidBuffer = new ComputeBuffer(numOfSpecies, BoidData2D.Size);
@@ -61,12 +45,12 @@ public class BoidMan2D : MonoBehaviour {
         boidBuffer.GetData(boidData);
 
         for (int i = 0; i < numOfSpecies; i++) {
-            aliveBoids[i].avgFlockHeading = boidData[i].flockHeading;
-            aliveBoids[i].centreOfFlockmates = boidData[i].flockCentre;
-            aliveBoids[i].avgAvoidanceHeading = boidData[i].avoidanceHeading;
-            aliveBoids[i].numPerceivedFlockmates = boidData[i].numFlockmates;
+            speciesBoids[i].avgFlockHeading = boidData[i].flockHeading;
+            speciesBoids[i].centreOfFlockmates = boidData[i].flockCentre;
+            speciesBoids[i].avgAvoidanceHeading = boidData[i].avoidanceHeading;
+            speciesBoids[i].numPerceivedFlockmates = boidData[i].numFlockmates;
 
-            aliveBoids[i].UpdateBoid();
+            speciesBoids[i].UpdateBoid();
         }
         boidBuffer.Release();
     }
@@ -80,9 +64,13 @@ public class BoidMan2D : MonoBehaviour {
         public Vector2 avoidanceHeading;
         public int numFlockmates;
 
+        public float perceptionRadius;
+        public float separationRadius;
+
         public static int Size {
             get {
-                return sizeof(float) * 2 * 5 + sizeof(int);
+                int sizeOfGenes = sizeof(float) * 2;
+                return sizeof(float) * 2 * 5 + sizeof(int) + sizeOfGenes;
             }
         }
     }

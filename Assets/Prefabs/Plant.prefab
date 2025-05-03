@@ -32,7 +32,8 @@ Transform:
   m_LocalPosition: {x: -8.95, y: 4.38, z: 0}
   m_LocalScale: {x: 0.15147, y: 0.15147, z: 0.15147}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1279494881386669504}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!212 &3075842564573346607
@@ -137,6 +138,10 @@ MonoBehaviour:
   foodValue: 10
   eaterTag: FishBoid
   secondHandRadius: 6
+  eatenAnim: {fileID: 610861145596051444}
+  OnEaten:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &7962796944023530277
 Rigidbody2D:
   serializedVersion: 4
@@ -164,3 +169,78 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1001 &5042711498189554511
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7445495909877564303}
+    m_Modifications:
+    - target: {fileID: 3116171219694326441, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_Name
+      value: PlantEatenEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8623506531606668678, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+--- !u!95 &610861145596051444 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5584878716658056379, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+  m_PrefabInstance: {fileID: 5042711498189554511}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1279494881386669504 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6069412706977736335, guid: c79607aadbe863e4193ae0a1e7b08bc3, type: 3}
+  m_PrefabInstance: {fileID: 5042711498189554511}
+  m_PrefabAsset: {fileID: 0}

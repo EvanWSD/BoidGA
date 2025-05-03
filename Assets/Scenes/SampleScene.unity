@@ -228,7 +228,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8597917644452725428, guid: b231781698e225842a1c936adf716e75, type: 3}
       insertIndex: -1
       addedObject: {fileID: 528214270}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 528675549522616379, guid: b231781698e225842a1c936adf716e75, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1380261585}
   m_SourcePrefab: {fileID: 100100000, guid: b231781698e225842a1c936adf716e75, type: 3}
 --- !u!1 &44925236
 GameObject:
@@ -401,12 +404,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197958569}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0776744, y: 1.1032815, z: -10.027273}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -61.322327, y: 0.26918042, z: -10.0482645}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1674160102}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &233855302
 GameObject:
@@ -549,7 +552,7 @@ GameObject:
   - component: {fileID: 240480608}
   - component: {fileID: 240480607}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: AgentSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -567,12 +570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e0b786331df1b4091147de8996add6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boidPrefab: {fileID: 4115476135907606149, guid: a68eabc10bd1b4dcaa03efa0e2052ddb, type: 3}
-  sharkPrefab: {fileID: 3638952843267504550, guid: 96dd6813dfd456e42a21616e257381bd, type: 3}
-  settings: {fileID: 11400000, guid: b2692177f2589fd4a8bef9035e85b4d6, type: 2}
-  numFishToSpawn: 50
-  numSharksToSpawn: 10
   spawnRadius: 10
+  speciesManager: {fileID: 2104658681}
 --- !u!4 &240480608
 Transform:
   m_ObjectHideFlags: 0
@@ -1373,6 +1372,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1380261583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 528675549522616379, guid: b231781698e225842a1c936adf716e75, type: 3}
+  m_PrefabInstance: {fileID: 28145813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1380261585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380261583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c997f47fd982ca41b35a92fa1f7b450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1674160101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1406,6 +1422,7 @@ Transform:
   - {fileID: 44925237}
   - {fileID: 1747854709}
   - {fileID: 1024591514}
+  - {fileID: 197958571}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1747854708
@@ -1934,6 +1951,99 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1972927687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1972927689}
+  - component: {fileID: 1972927688}
+  m_Layer: 0
+  m_Name: GeneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1972927688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972927687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d400fe77ab89f254db9f2cc5883656f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: b2692177f2589fd4a8bef9035e85b4d6, type: 2}
+--- !u!4 &1972927689
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972927687}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.4755204, y: 1.5885475, z: -10.009359}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2104658679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2104658680}
+  - component: {fileID: 2104658681}
+  m_Layer: 0
+  m_Name: SpeciesManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2104658680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104658679}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.8198733, y: 1.6834024, z: -10.028708}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2104658681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104658679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a2f94b45db51a459defed0b0f594bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allSpecies:
+  - {fileID: 11400000, guid: 60e6feaa468499246baf833637f9bc3f, type: 2}
+  - {fileID: 11400000, guid: 902d7d3a9223275449edcaf7901513cf, type: 2}
+  - {fileID: 11400000, guid: 3036995872880e043a84c835204b4cd2, type: 2}
 --- !u!1 &2105898470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1980,7 +2090,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: b2692177f2589fd4a8bef9035e85b4d6, type: 2}
   compute: {fileID: 7200000, guid: c51b961c8b9d746f1a2f242fa7bf1a31, type: 3}
-  allFish: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1991,5 +2100,6 @@ SceneRoots:
   - {fileID: 2105898471}
   - {fileID: 1181512020}
   - {fileID: 1674160102}
-  - {fileID: 197958571}
   - {fileID: 28145813}
+  - {fileID: 2104658680}
+  - {fileID: 1972927689}

@@ -29,6 +29,11 @@ MonoBehaviour:
     m_Bits: 64
   avoidCollisionWeight: 0
   collisionAvoidDst: 1
+  mutationRate: 1
+  loadGenesFromFile: 0
+  geneFileName: genes.json
+  rpThresholdBase: 30
+  rpThresholdVariance: 5
   visSeparation: 0
   visAlignment: 0
   visCohesion: 0

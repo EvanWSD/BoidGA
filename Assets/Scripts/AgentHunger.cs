@@ -7,12 +7,13 @@ public class AgentHunger : MonoBehaviour
     [SerializeField] float maxHunger = 20f;
     [SerializeField] float hungerRate = 0.1f;
 
-    public UnityEvent OnEat = new UnityEvent();
+    public UnityEvent OnEat = new();
 
     void Update() {
         _hunger -= hungerRate * Time.deltaTime;
         if (_hunger <= 0) {
-            Die();
+            GetComponent<AgentReproduction>().OnDeathAttempt.Invoke();
+            _hunger = maxHunger; // won't trigger if successful death
         }
     }
 
@@ -23,6 +24,7 @@ public class AgentHunger : MonoBehaviour
     }
 
     void Die() {
+
         Destroy(gameObject);
         // more to do here, could stop moving and still be food
     }

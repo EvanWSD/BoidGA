@@ -1,16 +1,30 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Boid2D : MonoBehaviour
 {
+    public static List<Boid2D> allBoids = new();
     protected BoidSettings settings;
-    protected float maxSpeed;
+
     Vector2 velocity;
+
+    public float minSpeed;
+    public float maxSpeed;
+    public float maxTurnRate;
+
+    public float separationWeight;
+    public float alignWeight;
+    public float cohesionWeight;
+
+    public float perceptionRadius;
+    public float separationRadius;
+
+    public float fovAngle;
 
     public Vector2 pos;
     public Vector2 headingDir;
-
-    protected BoidMan2D boidManager;
 
     [HideInInspector] public Vector2 avgFlockHeading;
     [HideInInspector] public Vector2 avgAvoidanceHeading;
@@ -21,11 +35,18 @@ public class Boid2D : MonoBehaviour
 
     public virtual void Initialize(BoidSettings settings) {
         this.settings = settings;
-        this.maxSpeed = settings.maxSpeed;
-        float randomSpeed = Random.Range(settings.minSpeed, settings.maxSpeed);
+        float randomSpeed = Random.Range(minSpeed, maxSpeed);
         velocity = Random.insideUnitCircle * randomSpeed;
         pos = transform.position;
         headingDir = transform.up;
+    }
+
+    protected virtual void OnEnable() {
+        allBoids.Add(this);
+    }
+
+    protected virtual void OnDisable() {
+        allBoids.Remove(this);
     }
 
     public void UpdateBoid() {
@@ -34,15 +55,15 @@ public class Boid2D : MonoBehaviour
         if (numPerceivedFlockmates != 0) {
             centreOfFlockmates /= numPerceivedFlockmates;
             Vector2 offsetToFlockmatesCentre = (centreOfFlockmates - pos);
-            acceleration += SteerTowards(avgFlockHeading) * settings.alignWeight;
-            acceleration += SteerTowards(offsetToFlockmatesCentre) * settings.cohesionWeight;
-            acceleration += SteerTowards(avgAvoidanceHeading) * settings.separationWeight;
+            acceleration += SteerTowards(avgFlockHeading) * alignWeight;
+            acceleration += SteerTowards(offsetToFlockmatesCentre) * cohesionWeight;
+            acceleration += SteerTowards(avgAvoidanceHeading) * separationWeight;
         }
 
         acceleration = ApplyCustomRules(acceleration);
 
         velocity += acceleration * Time.deltaTime;
-        velocity = ClampSpeed(velocity, settings.minSpeed, settings.maxSpeed);
+        velocity = ClampSpeed(velocity, minSpeed, maxSpeed);
 
         transform.position = pos + velocity * Time.deltaTime;
         pos = transform.position;
@@ -57,7 +78,6 @@ public class Boid2D : MonoBehaviour
 
     Vector2 ObstacleAvoidance() {
         Vector2 avoidForce = Vector2.zero;
-        float fovAngle = settings.fovAngle;
         float rayCount = settings.rayCount;
         float angleStep = fovAngle / (rayCount - 1);
         float startAngle = -fovAngle / 2;
@@ -104,8 +124,8 @@ public class Boid2D : MonoBehaviour
     }
 
     protected Vector2 SteerTowards(Vector2 vector) {
-        Vector2 v = vector.normalized * settings.maxSpeed - velocity;
-        return Vector2.ClampMagnitude(v, settings.maxTurnRate);
+        Vector2 v = vector.normalized * maxSpeed - velocity;
+        return Vector2.ClampMagnitude(v, maxTurnRate);
     }
 
     Vector2 ClampSpeed(Vector2 v, float minSpeed, float maxSpeed) {

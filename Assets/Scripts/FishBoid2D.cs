@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,6 +11,8 @@ public enum FishState
 
 public class FishBoid2D : Boid2D
 {
+    public static List<Boid2D> allFish = new();
+
     [SerializeField] LayerMask sharkMask;
     float fearWeight = 10f;
     FishState state = FishState.idle;
@@ -31,9 +33,18 @@ public class FishBoid2D : Boid2D
     public override void Initialize(BoidSettings settings) {
         base.Initialize(settings);
         calmTimerDelta = calmTimerMax;
-        BoidMan2D boidManager = GameObject.FindGameObjectWithTag("BoidManager").GetComponent<BoidMan2D>();
-        boidManager.allFish.Add(this);
     }
+
+    protected override void OnEnable() {
+        base.OnEnable();
+        allFish.Add(this);
+    }
+
+    protected override void OnDisable() {
+        base.OnDisable();
+        allFish.Remove(this);
+    }
+
 
     void OnSawShark(SharkBoid2D seenShark) {
         if (seenShark == null) {
@@ -102,7 +113,7 @@ public class FishBoid2D : Boid2D
 
     void PosterVisAlignment() {
         float radius = settings.perceptionRadius;
-        foreach (FishBoid2D boid in boidManager.allFish) {
+        foreach (FishBoid2D boid in allFish) {
             Transform boidTransform = boid.transform; // could be mine or another fish
             DrawThickLine(boidTransform.position, boidTransform.position + boidTransform.up * 0.5f, Color.red, 5f);
             if (boid != this && Vector3.Distance(this.transform.position, boidTransform.position) <= radius) {
@@ -113,7 +124,7 @@ public class FishBoid2D : Boid2D
 
     void PosterVisCohesion() {
         float radius = settings.perceptionRadius;
-        foreach (FishBoid2D otherBoid in boidManager.allFish) {
+        foreach (FishBoid2D otherBoid in allFish) {
             Vector3 toOtherBoid = otherBoid.transform.position - transform.position;
             if (otherBoid != this && toOtherBoid.magnitude <= radius) {
                 DrawThickLine(otherBoid.transform.position, centreOfFlockmates, Color.white, 3);

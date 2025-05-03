@@ -1,0 +1,83 @@
+{
+    "_keys": [
+        "minSpeed",
+        "maxSpeed",
+        "maxTurnRate",
+        "separationWeight",
+        "alignWeight",
+        "cohesionWeight",
+        "perceptionRadius",
+        "separationRadius",
+        "fovAngle",
+        "rpThresholdBase",
+        "rpThresholdVariance"
+    ],
+    "_values": [
+        {
+            "value": 1,
+            "minValue": 0.10000000149011612,
+            "maxValue": 10.0,
+            "mutationDelta": 1.0
+        },
+        {
+            "value": 4.767443656921387,
+            "minValue": 0.10000000149011612,
+            "maxValue": 10.0,
+            "mutationDelta": 1.0
+        },
+        {
+            "value": 0.24053272604942323,
+            "minValue": 0.10000000149011612,
+            "maxValue": 0.5,
+            "mutationDelta": 0.10000000149011612
+        },
+        {
+            "value": 10.034239768981934,
+            "minValue": 0.0,
+            "maxValue": 5.0,
+            "mutationDelta": 0.10000000149011612
+        },
+        {
+            "value": 3.0406219959259035,
+            "minValue": 0.0,
+            "maxValue": 5.0,
+            "mutationDelta": 0.10000000149011612
+        },
+        {
+            "value": 5.004727363586426,
+            "minValue": 0.0,
+            "maxValue": 5.0,
+            "mutationDelta": 0.10000000149011612
+        },
+        {
+            "value": 2.570951461791992,
+            "minValue": 0.10000000149011612,
+            "maxValue": 10.0,
+            "mutationDelta": 0.10000000149011612
+        },
+        {
+            "value": 0.8618806600570679,
+            "minValue": 0.10000000149011612,
+            "maxValue": 10.0,
+            "mutationDelta": 0.10000000149011612
+        },
+        {
+            "value": 109.86188507080078,
+            "minValue": 10.0,
+            "maxValue": 180.0,
+            "mutationDelta": 1.0
+        },
+        {
+            "value": 29.821317672729493,
+            "minValue": 20.0,
+            "maxValue": 40.0,
+            "mutationDelta": 1.0
+        },
+        {
+            "value": 4.781124591827393,
+            "minValue": 0.0,
+            "maxValue": 15.0,
+            "mutationDelta": 1.0
+        }
+    ]
+}
