@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum SpeciesType
@@ -17,7 +15,8 @@ public class Species : ScriptableObject
     public int startCount;
     public int maxCount;
     public int minCount;
-    [HideInInspector] public int populationCount;
+    public int populationCount;
     public GameObject prefab;
     public string tag;
+    public bool doEvolution = true;
 }

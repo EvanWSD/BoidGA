@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class Boid2D : MonoBehaviour
 {
     public static List<Boid2D> allBoids = new();
-    protected BoidSettings settings;
+    [SerializeField] protected BoidSettings settings;
 
     Vector2 velocity;
 

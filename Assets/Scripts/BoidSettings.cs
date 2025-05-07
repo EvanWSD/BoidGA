@@ -44,5 +44,9 @@ public class BoidSettings : ScriptableObject {
     public bool visAlignment;
     public bool visCohesion;
 
+    [Header("Centrality Demo")] public float centralityWeight = 50f;
+
+    [Header("Fear")] public float fearWeight = 10f;
+
 
 }

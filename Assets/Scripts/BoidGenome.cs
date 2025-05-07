@@ -2,21 +2,22 @@ using UnityEngine;
 
 public class BoidGenome : Genome
 {
-    [SerializeField] BoidSettings settings;
+    [SerializeField] protected BoidSettings settings;
 
-    Boid2D boid;
+    protected Boid2D boid;
     AgentReproduction ecoAgent;
 
     void Start() {
         boid = GetComponent<Boid2D>();
         ecoAgent = GetComponent<AgentReproduction>();
-
-        if (generation == 1) InheritDefaultGenes();
+        if (GeneManager.Instance.isFirstGeneration) {
+            InheritDefaultGenes();
+        }
         else if (settings.loadGenesFromFile) genes = GeneManager.Instance.loadedGenes;
         AssignFromGenes();
     }
 
-    void AssignFromGenes() {
+    protected virtual void AssignFromGenes() {
         boid.minSpeed = genes["minSpeed"].value;
         boid.maxSpeed = genes["maxSpeed"].value;
         boid.maxTurnRate = genes["maxTurnRate"].value;
@@ -31,20 +32,20 @@ public class BoidGenome : Genome
         ecoAgent.rpVariance = genes["rpThresholdVariance"].value;
     }
 
-    void InheritDefaultGenes() {
+    protected virtual void InheritDefaultGenes() {
         // Boid Movement
-        genes["minSpeed"] = new GeneData(settings.minSpeed, 0.1f, 10f, 1f);
-        genes["maxSpeed"] = new GeneData(settings.maxSpeed, 0.1f, 10f, 1f);
-        genes["maxTurnRate"] = new GeneData(settings.maxTurnRate, 0.1f, 0.5f, 0.1f);
-        genes["separationWeight"] = new GeneData(settings.separationWeight, 0f, 5f, 0.1f);
-        genes["alignWeight"] = new GeneData(settings.alignWeight, 0f, 5f, 0.1f);
-        genes["cohesionWeight"] = new GeneData(settings.cohesionWeight, 0f, 5f, 0.1f);
-        genes["perceptionRadius"] = new GeneData(settings.perceptionRadius, 0.1f, 10f, 0.1f);
-        genes["separationRadius"] = new GeneData(settings.separationRadius, 0.1f, 10f, 0.1f);
-        genes["fovAngle"] = new GeneData(settings.fovAngle, 10f, 180f, 1f);
+        genes["minSpeed"] = new GeneData(settings.minSpeed, 2f, 5f, 2f);
+        genes["maxSpeed"] = new GeneData(settings.maxSpeed, 5f, 10f, 2f);
+        genes["maxTurnRate"] = new GeneData(settings.maxTurnRate, 0.1f, 0.5f, 0.2f);
+        genes["separationWeight"] = new GeneData(settings.separationWeight, 0f, 5f, 1f);
+        genes["alignWeight"] = new GeneData(settings.alignWeight, 0f, 5f, 1f);
+        genes["cohesionWeight"] = new GeneData(settings.cohesionWeight, 0f, 5f, 1f);
+        genes["perceptionRadius"] = new GeneData(settings.perceptionRadius, 0.1f, 10f, 3f);
+        genes["separationRadius"] = new GeneData(settings.separationRadius, 0.1f, 10f, 3f);
+        genes["fovAngle"] = new GeneData(settings.fovAngle, 10f, 180f, 30f);
 
         // Ecosystem Simulation
-        genes["rpThresholdBase"] = new GeneData(settings.rpThresholdBase, 20f, 40f, 1f);
-        genes["rpThresholdVariance"] = new GeneData(settings.rpThresholdVariance, 0f, 15f, 1f);
+        genes["rpThresholdBase"] = new GeneData(settings.rpThresholdBase, 10f, 20f, 5f);
+        genes["rpThresholdVariance"] = new GeneData(settings.rpThresholdVariance, 0f, 5f, 4f);
     }
 }

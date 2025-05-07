@@ -8,18 +8,20 @@ public class BoidMan2D : MonoBehaviour {
     public BoidSettings settings;
     public ComputeShader compute;
 
+    [SerializeField] SpeciesManager speciesManager;
+
     void Start () {
         foreach (Boid2D b in Boid2D.allBoids) {
             b.Initialize(settings);
         }
     }
 
-    void Update () {
+    protected virtual void Update () {
         UpdateSpecies(FishBoid2D.allFish);
         UpdateSpecies(SharkBoid2D.allSharks);
     }
 
-    void UpdateSpecies(List<Boid2D> speciesBoids) {
+    protected void UpdateSpecies(List<Boid2D> speciesBoids) {
         int numOfSpecies = speciesBoids.Count;
         if (numOfSpecies == 0) return;
 

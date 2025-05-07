@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 enum GraphUtil {
     None,
@@ -10,31 +12,36 @@ public class CustomGraph : MonoBehaviour
 {
     GraphFuncLib graphFuncLib;
     [SerializeField] Camera mainCam;
-    [SerializeField] LineRenderer fishLR;
-    [SerializeField] LineRenderer sharkLR;
 
-    [SerializeField] [Range(0.01f, 1f)] float yScale = 0.5f;
+    public UnityEvent OnScaleChanged { get; } = new();
+    [SerializeField] [Range(0.01f, 10f)] float yScale = 0.5f;
     float oldYScale;
-    [SerializeField] [Range(0.01f, 1f)] float xScale = 0.5f;
+    [SerializeField] [Range(0.01f, 10f)] float xScale = 0.5f;
     float oldXScale;
 
-    float timeToMax = 42f;
+    float timeToMax = 35f;
     float autoScaleDelta = 1.1f;
 
     // get values
-    List<LineRenderer> boidLRs;
+    [SerializeField] public List<LineRenderer> boidLRs;
 
     float xG = 0f;
     float yG = 0f;
+    public float lastDataX { get; private set; }
+    public float lastDataY { get; private set; }
 
     int plotIndex = 0;
     bool graphStarted = false;
+    public UnityEvent OnGraphStart { get; } = new();
     float baseTime;
 
     float plotCDTimer;
     float plotCDTimerMax = 1f;
+    public UnityEvent OnNewPlot { get; } = new();
 
     List<Color> cols;
+
+    List<Dictionary<string, GeneData>> graphData = new();
 
     void Start() {
         graphFuncLib = GetComponent<GraphFuncLib>();
@@ -42,13 +49,17 @@ public class CustomGraph : MonoBehaviour
         cols = new List<Color>() { Color.red, Color.yellow, Color.green, Color.cyan, Color.blue };
         oldYScale = yScale;
         oldXScale = xScale;
+
+        OnGraphStart.AddListener(() => {
+            InitGraphValues();
+            OnScaleChanged.Invoke();
+        });
+        OnGraphStart.Invoke();
     }
 
-    void StartGraph()
-    {
+    void InitGraphValues() {
         baseTime = Time.time;
         graphStarted = true;
-        GetInitInfo();
     }
 
     void Update()
@@ -66,44 +77,45 @@ public class CustomGraph : MonoBehaviour
             }
 
             if (oldYScale != yScale || oldXScale != xScale) {
+                OnScaleChanged.Invoke();
                 RescaleGraph();
             }
 
             plotCDTimer -= Time.deltaTime;
             if (plotCDTimer <= 0) {
                 plotCDTimer = plotCDTimerMax;
-                PlotPoints();
+                CaptureGraphData();
+                PlotNewPoint();
             }
         }
         else if (Input.GetKeyDown(KeyCode.F))
-            StartGraph();
+            OnGraphStart.Invoke();
     }
 
     // main function mapping X->Y (edit this!)
     float F(Transform t) {
-        if (t.CompareTag("FishLine")) {
-            return graphFuncLib.AverageGeneValue(FishBoid2D.allFish, "fovAngle");
-        }
-
-        if (t.CompareTag("SharkLine")) {
-            return graphFuncLib.AverageGeneValue(SharkBoid2D.allSharks, "fovAngle");
-        }
-        return 0f;
+        float v = graphData[^1][graphFuncLib.geneSelector.selectedGene].value;
+        //Debug.Log(v);
+        return v;
     }
 
-    void PlotPoints()
+    void PlotNewPoint()
     {
         xG = Time.time - baseTime;
-        foreach (LineRenderer boidLR in boidLRs)
+        lastDataX = xG;
+        foreach (LineRenderer boidLR in boidLRs) // per line
         {
             boidLR.positionCount = plotIndex + 1;
+            float output = lastDataY = F(boidLR.transform);
+
             boidLR.SetPosition(plotIndex, new Vector3(
                 xG * xScale,
-                F(boidLR.transform) * yScale,
+                output * yScale,
                 0f
                 ) + transform.position);
         }
         plotIndex++;
+        OnNewPlot.Invoke();
     }
 
     void RescaleGraph() {
@@ -111,10 +123,10 @@ public class CustomGraph : MonoBehaviour
         foreach (LineRenderer lr in boidLRs) {
             for (int i = 0; i < lr.positionCount; i++) {
                 Vector3 pos = lr.GetPosition(i);
-                pos -= transformPos; // remove offset
+                pos -= transformPos; // LineRenderers use world space by default!!
                 pos.y = pos.y * yScale / oldYScale;
                 pos.x = pos.x * xScale / oldXScale;
-                pos += transformPos; // reapply offset
+                pos += transformPos;
                 lr.SetPosition(i, pos);
             }
         }
@@ -122,9 +134,28 @@ public class CustomGraph : MonoBehaviour
         oldXScale = xScale;
     }
 
-    void GetInitInfo() {
-        boidLRs = new List<LineRenderer>() { fishLR, sharkLR };
+    void CaptureGraphData() {
+        graphData.Add(GeneManager.AvgGeneDict(SpeciesManager.Instance.selectedSpecies));
     }
 
+    public void SwitchGraph(string selectedGene) {
+        Vector3 transformPos = transform.position;
+        foreach (LineRenderer speciesLine in boidLRs) {
+            for (int i = 0; i < graphData.Count; i++) {
+                Vector3 pos = speciesLine.GetPosition(i);
+                pos -= transformPos;
+                pos.y = graphData[i][selectedGene].value * yScale;
+                pos += transformPos;
+                speciesLine.SetPosition(i, pos);
+            }
+        }
+    }
 
+    public Vector2 GetGraphScale() {
+        return new Vector2(xScale, yScale);
+    }
+
+    public float GetGraphTimeElapsed() {
+        return Time.time - baseTime;
+    }
 }

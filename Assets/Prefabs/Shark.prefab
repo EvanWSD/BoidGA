@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0819cd1d4152d9f4bbb117d81a47daf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: b2692177f2589fd4a8bef9035e85b4d6, type: 2}
   minSpeed: 0
   maxSpeed: 0
   maxTurnRate: 0
@@ -393,12 +394,6 @@ MonoBehaviour:
   boidSettings: {fileID: 11400000, guid: b2692177f2589fd4a8bef9035e85b4d6, type: 2}
   rpThresholdBase: 5
   rpVariance: 2
-  OnDeathAttempt:
-    m_PersistentCalls:
-      m_Calls: []
-  OnReproduce:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &-4301859001650054945
 MonoBehaviour:
   m_ObjectHideFlags: 0

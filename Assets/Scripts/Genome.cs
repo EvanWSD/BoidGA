@@ -22,26 +22,25 @@ public struct GeneData
 public class Genome : MonoBehaviour
 {
     public Dictionary<string, GeneData> genes = new();
-    public int generation = 1;
 
     public Dictionary<string, GeneData> Crossover(Genome partner)
     {
-        Dictionary<string, GeneData> childGenes = new Dictionary<string, GeneData>();
-        foreach (var key in genes.Keys)
-        {
-            childGenes[key] = (Random.value < 0.5f) ? genes[key] : partner.genes[key];
+        Dictionary<string, GeneData> childGenes = new Dictionary<string, GeneData>(genes);
+        foreach (var key in genes.Keys) {
+            GeneData gene = childGenes[key];
+            gene.value = Mathf.Lerp(genes[key].value, partner.genes[key].value, Random.value);
+            childGenes[key] = gene;
         }
         return childGenes;
     }
 
-    public void TryMutate(float mutationRate)
-    {
+    public void TryMutate(float mutationRate) {
         Dictionary<string, GeneData> mutatedGenes = new Dictionary<string, GeneData>();
         foreach (var key in genes.Keys) {
             if (Random.value < mutationRate) {
                 GeneData gene = genes[key];
                 gene.value += Random.Range(-gene.mutationDelta, gene.mutationDelta);
-                Mathf.Clamp(gene.value, gene.minValue, gene.maxValue);
+                gene.value = Mathf.Clamp(gene.value, gene.minValue, gene.maxValue);
                 mutatedGenes[key] = gene;
             }
         }

@@ -10,74 +10,81 @@
         "separationRadius",
         "fovAngle",
         "rpThresholdBase",
-        "rpThresholdVariance"
+        "rpThresholdVariance",
+        "fearWeight"
     ],
     "_values": [
         {
-            "value": 1,
+            "value": 3.1264476776123049,
             "minValue": 0.10000000149011612,
             "maxValue": 10.0,
-            "mutationDelta": 1.0
+            "mutationDelta": 3.0
         },
         {
-            "value": 4.767443656921387,
+            "value": 5.186220169067383,
             "minValue": 0.10000000149011612,
             "maxValue": 10.0,
-            "mutationDelta": 1.0
+            "mutationDelta": 3.0
         },
         {
-            "value": 0.24053272604942323,
+            "value": 0.30333277583122256,
             "minValue": 0.10000000149011612,
             "maxValue": 0.5,
-            "mutationDelta": 0.10000000149011612
+            "mutationDelta": 0.20000000298023225
         },
         {
-            "value": 10.034239768981934,
+            "value": 4.312012672424316,
             "minValue": 0.0,
             "maxValue": 5.0,
-            "mutationDelta": 0.10000000149011612
+            "mutationDelta": 1.0
         },
         {
-            "value": 3.0406219959259035,
+            "value": 3.112281322479248,
             "minValue": 0.0,
             "maxValue": 5.0,
-            "mutationDelta": 0.10000000149011612
+            "mutationDelta": 1.0
         },
         {
-            "value": 5.004727363586426,
+            "value": 4.1785054206848148,
             "minValue": 0.0,
             "maxValue": 5.0,
-            "mutationDelta": 0.10000000149011612
+            "mutationDelta": 1.0
         },
         {
-            "value": 2.570951461791992,
+            "value": 2.9046144485473635,
             "minValue": 0.10000000149011612,
             "maxValue": 10.0,
-            "mutationDelta": 0.10000000149011612
+            "mutationDelta": 3.0
         },
         {
-            "value": 0.8618806600570679,
+            "value": 3.1728885173797609,
             "minValue": 0.10000000149011612,
             "maxValue": 10.0,
-            "mutationDelta": 0.10000000149011612
+            "mutationDelta": 3.0
         },
         {
-            "value": 109.86188507080078,
+            "value": 119.49541473388672,
             "minValue": 10.0,
             "maxValue": 180.0,
-            "mutationDelta": 1.0
+            "mutationDelta": 30.0
         },
         {
-            "value": 29.821317672729493,
-            "minValue": 20.0,
-            "maxValue": 40.0,
-            "mutationDelta": 1.0
+            "value": 16.498201370239259,
+            "minValue": 10.0,
+            "maxValue": 20.0,
+            "mutationDelta": 5.0
         },
         {
-            "value": 4.781124591827393,
+            "value": 3.069777011871338,
             "minValue": 0.0,
-            "maxValue": 15.0,
-            "mutationDelta": 1.0
+            "maxValue": 5.0,
+            "mutationDelta": 4.0
+        },
+        {
+            "value": 11.356887817382813,
+            "minValue": 0.0,
+            "maxValue": 20.0,
+            "mutationDelta": 3.0
         }
     ]
 }

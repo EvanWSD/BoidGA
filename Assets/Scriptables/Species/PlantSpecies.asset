@@ -18,3 +18,5 @@ MonoBehaviour:
   minCount: 0
   populationCount: 0
   prefab: {fileID: 3098665814014402606, guid: ed93277f63385fe47a9aea123fbbdb94, type: 3}
+  tag: Plant
+  doEvolution: 0

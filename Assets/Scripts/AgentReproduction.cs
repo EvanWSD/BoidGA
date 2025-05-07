@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-
-
 public class AgentReproduction : MonoBehaviour
 {
     [SerializeField] Species species;
@@ -21,15 +19,17 @@ public class AgentReproduction : MonoBehaviour
     [HideInInspector] public float rpThresholdBase = 5f;
     [HideInInspector] public float rpVariance = 2f;
 
-    public UnityEvent OnDeathAttempt = new();
-    public UnityEvent OnReproduce = new();
+    public UnityEvent OnDeathAttempt { get; } = new();
+    public UnityEvent OnReproduce { get; } = new();
+    bool dying = false;
 
     void Start() {
         ResetRpTimer();
-        species.populationCount = GameObject.FindGameObjectsWithTag(species.prefab.tag).Length;
         myGenome = GetComponent<Genome>();
         partnerDetector = GetComponentInChildren<PartnerDetector>();
-        partnerDetector.OnPartnerFound.AddListener((AgentReproduction other) => {
+        partnerDetector.OnPartnerFound.AddListener((other) => {
+            if (species != other.species)
+                return;
             partner = other.GetComponent<Genome>();
             partnerDetector.available = false;
             ReproduceSexual(partner);
@@ -40,7 +40,8 @@ public class AgentReproduction : MonoBehaviour
             if (species.populationCount < species.minCount) {
                 return;
             }
-            species.populationCount--;
+            if (!dying) species.populationCount--;
+            dying = true;
             Destroy(gameObject);
         });
     }
@@ -84,7 +85,6 @@ public class AgentReproduction : MonoBehaviour
 
     void InheritGenesToChild(Genome childGenome, Dictionary<string, GeneData> childGenes) {
         childGenome.genes = childGenes;
-        childGenome.generation = Mathf.Max(myGenome.generation, partner.generation) + 1;
-        childGenome.TryMutate(boidSettings.mutationRate);
+        if (species.doEvolution) childGenome.TryMutate(boidSettings.mutationRate);
     }
 }

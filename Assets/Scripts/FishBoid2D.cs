@@ -14,20 +14,28 @@ public class FishBoid2D : Boid2D
     public static List<Boid2D> allFish = new();
 
     [SerializeField] LayerMask sharkMask;
-    float fearWeight = 10f;
+    public float fearWeight;
     FishState state = FishState.idle;
-    public UnityEvent<SharkBoid2D> onSawShark = new UnityEvent<SharkBoid2D>();
+    public UnityEvent<SharkBoid2D> onSawShark;
 
     public bool posterBoid;
 
-    float calmTimerMax = 2f;
-    float calmTimerDelta = 2f;
+    const float SCARED_SPEED_MULT = 1.1f;
+    float calmTimerMax = 0.3f;
+    float calmTimerDelta = 0.3f;
 
     Vector3 toDetectedShark;
 
     void Start() {
         onSawShark.AddListener(OnSawShark);
         debugColor = Color.cyan;
+    }
+    protected override Vector2 ApplyCustomRules(Vector2 a) {
+        a = base.ApplyCustomRules(a);
+        if (state == FishState.fleeing) {
+            a += SteerTowards(-toDetectedShark) * fearWeight;
+        }
+        return a;
     }
 
     public override void Initialize(BoidSettings settings) {
@@ -70,23 +78,16 @@ public class FishBoid2D : Boid2D
 
     void BeginFleeing() {
         state = FishState.fleeing;
-        maxSpeed *= 1.5f;
+        maxSpeed *= SCARED_SPEED_MULT;
     }
 
     void ReturnToIdle() {
         state = FishState.idle;
-        maxSpeed /= 1.5f;
+        maxSpeed /= SCARED_SPEED_MULT;
     }
 
-    protected override Vector2 ApplyCustomRules(Vector2 a) {
-        a = base.ApplyCustomRules(a);
-        if (state == FishState.fleeing) {
-            a += SteerTowards(-toDetectedShark) * fearWeight;
-        }
 
-        return a;
-    }
-
+    #if UNITY_EDITOR
     void OnDrawGizmos() {
         if (posterBoid) {
             if (settings.visSeparation) PosterVisSeparation();
@@ -94,7 +95,6 @@ public class FishBoid2D : Boid2D
             if (settings.visCohesion) PosterVisCohesion();
         }
     }
-
     #region Poster Visualisation
     void PosterVisSeparation() {
         Gizmos.color = Color.green;
@@ -138,4 +138,5 @@ public class FishBoid2D : Boid2D
         Handles.DrawBezier(p1,p2,p1,p2, col,null,thickness);
     }
     #endregion
+    #endif
 }

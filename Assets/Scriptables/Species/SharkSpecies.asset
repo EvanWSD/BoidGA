@@ -18,3 +18,5 @@ MonoBehaviour:
   minCount: 5
   populationCount: 0
   prefab: {fileID: 3638952843267504550, guid: 96dd6813dfd456e42a21616e257381bd, type: 3}
+  tag: SharkBoid
+  doEvolution: 0
