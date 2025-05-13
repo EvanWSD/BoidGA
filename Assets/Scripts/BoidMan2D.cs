@@ -70,9 +70,8 @@ public class BoidMan2D : MonoBehaviour {
         public float separationRadius;
 
         public static int Size {
-            get {
-                int sizeOfGenes = sizeof(float) * 2;
-                return sizeof(float) * 2 * 5 + sizeof(int) + sizeOfGenes;
+            get { // Vector2s + ints + floats
+                return sizeof(float)*2 * 5 + sizeof(int) + sizeof(float) * 2;
             }
         }
     }

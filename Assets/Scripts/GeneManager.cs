@@ -98,11 +98,6 @@ public class GeneManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L)) {
             Dictionary<string, GeneData> loadedGenes = GeneSaveManager.LoadGenes();
-            Debug.Log(loadedGenes["minSpeed"].value);
-        }
-
-        if (Input.GetKeyDown(KeyCode.R)) {
-            //RepopulateWithAverageGenes(SpeciesManager.Instance.selectedSpecies);
         }
     }
 }

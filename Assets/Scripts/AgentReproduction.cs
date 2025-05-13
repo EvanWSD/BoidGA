@@ -59,7 +59,7 @@ public class AgentReproduction : MonoBehaviour
     }
 
     void BreakUp() {
-        partner = null; // :(
+        partner = null;
     }
 
     void ReproduceAsexual() {

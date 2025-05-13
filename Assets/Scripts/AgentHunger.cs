@@ -26,6 +26,5 @@ public class AgentHunger : MonoBehaviour
     void Die() {
 
         Destroy(gameObject);
-        // more to do here, could stop moving and still be food
     }
 }

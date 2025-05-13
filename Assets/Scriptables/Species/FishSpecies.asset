@@ -15,8 +15,8 @@ MonoBehaviour:
   speciesType: 2
   startCount: 50
   maxCount: 100
-  minCount: 10
-  populationCount: 92
+  minCount: 0
+  populationCount: 100
   prefab: {fileID: 4115476135907606149, guid: a68eabc10bd1b4dcaa03efa0e2052ddb, type: 3}
   tag: FishBoid
   doEvolution: 1

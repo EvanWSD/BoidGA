@@ -114,7 +114,7 @@ public class FishBoid2D : Boid2D
     void PosterVisAlignment() {
         float radius = settings.perceptionRadius;
         foreach (FishBoid2D boid in allFish) {
-            Transform boidTransform = boid.transform; // could be mine or another fish
+            Transform boidTransform = boid.transform;
             DrawThickLine(boidTransform.position, boidTransform.position + boidTransform.up * 0.5f, Color.red, 5f);
             if (boid != this && Vector3.Distance(this.transform.position, boidTransform.position) <= radius) {
                 DrawThickLine(transform.position, boid.transform.position, Color.yellow + Color.red + Color.red, 3f);

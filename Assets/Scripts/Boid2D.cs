@@ -71,7 +71,6 @@ public class Boid2D : MonoBehaviour
     }
 
     protected virtual Vector2 ApplyCustomRules(Vector2 a) {
-        //a += SteerTowards(ObstacleAvoidance()) * settings.avoidCollisionWeight;
         a += SteerTowards(CentralTendency()) * settings.CTWeight;
         return a;
     }
@@ -88,7 +87,6 @@ public class Boid2D : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, settings.collisionAvoidDst,
                 settings.obstacleMask);
-            // Debug.DrawRay(transform.position, rayDirection * settings.collisionAvoidDst, Color.red);
 
             if (hit.collider != null) {
                 Vector2 hitNormal = hit.normal;
@@ -112,7 +110,6 @@ public class Boid2D : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distance,
                 mask);
-            //Debug.DrawRay(transform.position, rayDirection * settings.collisionAvoidDst, debugColor);
 
             if (hit.collider != null) {
                 onHit.Invoke(hit.transform.GetComponent<T>());
